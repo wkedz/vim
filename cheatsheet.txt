@@ -1,0 +1,381 @@
+# 1 Vim Essentials
+
+## 1.1 Navigation 
+    
+    hjkl - left, down, up, right
+    Crtl-f - move one page down
+    Crtl-b - move back up one pade
+    G - go to last line in file 
+    gg- go to the first line
+    _ - go to beggining of the line (first no whitespace)
+    w - move to the beginning of next word (stops on comma etc)
+    b - move to the beginning of the previous word (tops on comma etc)
+    W - move to the beginning of the next word (bypass comma)
+    B - move to the beginning of the previous word (bypass comma)
+    E - forward to the end of the word
+    0 - move to the beginning of the line (with whitespace)
+    :$ - move to the end of the file
+    $ - move to the end of the line
+    ^ - move to the beginning of the line (not whitespace)
+    2W - move 2 words forward
+    2w - move 2 words forward
+    ( - jump upper to paragraph
+    ) - jump down to paragaph
+    t<CHAR> - go to right before <CHAR> 
+    crtl+d - jump half page up
+    crtl+u - jump half page down
+    zz - centers the view
+    v%{ - will select everything inside curly bracket
+
+## 1.2 Deleting Text
+
+    x - delete char under cursor
+    X - delete char before cursor
+    . - repeat last command
+    d$ - delete remaining text of the line
+    D - same as above
+    dw - delete word (comma etc)
+    dW - delete word (no coma etx)
+    d2W - delete two words
+    2dw - delete two words
+    :g/<PATTERN>/d - delete every line that does containt <PATTERN>
+    :g!/<PATTERN>/d - delete every line that does not contain <PATTERN>
+    :v/<PATTERN>/d - same as above
+
+# 2 Vim help system
+
+## 2.1 Help
+
+    :help
+    :h :wq - help about :wq
+    :h :q - help about :q
+    :h Ctrl-f - help about Crtl-f
+    Crtl-] - jump to documentation for "exclusive"
+    Ctrl-o - jump to the previous location
+    Ctrl-w-w - switch back to the editing file 
+    :q - exit help
+    : Ctrl+f - display history list
+
+# 3 Deleting, Yanking and Putting
+
+## 3.1 Cut, Copy, Paste
+
+    d - cut to registry
+    c - cut to registry
+    p - paste text above cursor
+    P - paste text under cursor
+    dd - cut the line
+    Crtl-r - redo
+    "jyy - yank this line into the "j register
+    "fyy - yank this line into the "f register
+    "jp - put the contents of the "j register below
+    "fp - put the contents of the "f register below
+    "Jyy - append this line to the "j register
+    "Fyy - append this line to the "f register
+
+## 3.2 Registers
+
+    Unnamed register = ""
+    Numbered registers = "0 "1 ... "9
+    Named registers = "a ... "z
+    "" holds text from d,c,s,x and y operations
+    "0 holds last text yanked (y)
+    "1 holds last text (d) an changed (c)
+    :reg - display all registers
+    :req a - display only a register
+    "4 p - paste content from register 4
+    "ayy - yanke into a register
+
+# 4 Transforming and Substitunting Text
+
+## 4.1 Inserting, changing, replacing and joining
+
+I - go to the first no blank line, and set insert mode
+    ^i - same as above
+    a - go to next character and set insert mode
+    A - go to the end of the line and set insert mode
+    o - begins new line below the cursor and set insert mode
+    O - begins new line above the cursor and set insert mode
+    [count]operation esc - repeat operation count times exampl 80i9esc -> inserts 80 times sign 9 
+    R - replace mode
+    r - replace character under cursor 
+    C - change word
+    C$ - relace text to the end of the line
+    cc - replce whole line
+    ~ - changes lowercase sign to uppercase
+    g~w - switch case in word
+    g~$ - switch case chars to the end of the line
+    gUw - uppercase word
+    guw - lowercase word
+    guu - lowercase all and go to begining of the line 
+    J - join current line with the one below (with additional spaces , two if thers is a dot at the end of current line)
+    gJ - join current line with the one below (with no additional spaces)
+    g~~ - switch the case of the entire line
+
+## 4.2 Search, Find, Replace
+
+    ; - will search in same direction
+    , - will search in oposite direction)
+    f<char> - goto next <char> in line 
+    F<char> - find previous <char> in line
+    t<char> - go to position just before <char> 
+    T<char> - go to position just before <char> (backwards) 
+    /<pattern> - search for next pattern
+    ?<pattern> - search for previous pattern
+    :set hls    - highlight search
+    :set nohls  - turnoff hls
+
+    n - repeat search in the same direction    
+    N - repeat search in the oposite direction    
+    * - forward search for word under cursor (asterix sign)
+    # - reverse search for word under cursor (pound sign)
+
+    search -> execute command on find -> press (next find) -> press . (execute last command on this find)
+    /find -> cw a -> esc -> n -> . -> search for find change word then press esc and n to go to next and . to execute command
+
+    :[range]s/[OLD_PATTERN]/[NEW_PATTERN]/[flag] - replace OLD_PATTERN with NEW_PATTENR in the RANGE ([FLAG] is optional)
+    [range]
+    $ - last line
+    . - current line
+    % - 1,$ - all file 
+    [flag]
+    g - every occurence
+    :1,5s/for/FOR/g - substitute every occurence of for to FOR in range 1-5 lines
+    :/Global/,/Local/s/net/org/g -> substitute ovety occurence of net to org between Global and Local
+
+    :s/\/var\/spoot/\/usr\/local/ - replace path /var/spoot with /usr/local
+    :s#/var/spoot#/usr/local# - same as above, but using pattern separator WARNING: pattern separator need to be set first
+    :set nu - set line numbers
+    :set <COMMAND>! - !(exclamation mark) switch to opposite value (toggle)
+
+# 5 Text Objects and Macros
+    
+## 5.1 Text Objects
+
+  Text Objects 
+  {operator}{a}{object} - perform operation on all object
+  {operator}{i}{object} - perform operation inside object
+
+  ciw - change inner word
+  das - delete sentence from beginning to cursor
+  dap - delete a paragraphi (with whiteline)
+  dai - delete a paragraph without whiteline
+  daw - delete word under the cursor with next whitespace
+  diw - delete word under the cursor without next whitespace
+  ci[ - change between inner bracket 
+  ca[ - change between inner bracket including brackets itself
+  di[ - delete everything inside brackets 
+  da[ - delete everything inside brackets including brackerts itself
+  yi< - yank everything between < > 
+  ya< - yank everything between < > including bracket itself 
+  cit - change inside tag
+  cat - change inside tag
+  ca{ caB - change inside block
+  ci{ ciB - change inside block
+  ca" ' ` - change inside " ' ` 
+  ci" ' ` - change inside " ' `
+  "iyi> - yank into i register tag >
+  vt<CHAR> - visual to <char>
+
+## 5.2 Macros
+
+NOTE: qa - start recording into a reg
+q - stop recording
+@a - use register a
+@@ - use last register
+:25,73 normal @a - execute macro from a on range
+:.,$ normal @a - execute macron from a on file 
+
+# 6 Visual Mode
+
+gv - reselect last visual mode selection
+v - charactervise visual mode,
+V - linewise visual mode,
+Crtl + v - block wise visual mode, 
+crtl + v$A - append to the end of selected area
+
+o - go to the oposite side of selection (usefull for selection on oposite side)
+O - go to the oposite side of selection (usefull for selection on oposite side)
+
+~ - switch case,
+c - change,
+d - delete,
+y - yank,
+r - replace,
+x - delete,
+I - insert,
+A - append,
+J - Join,
+u - make lowercase,
+U - make uppercase,
+> - shift right,
+< - shift left
+vap - select a paragraph
+Vi{ - select all insisde curly brackets
+>i{ - shift right inside curly brackets
+
+set setwidth? - size of width
+set tabstop? - size of tab
+
+select block with V and press : command block :'<,'> 
+
+:'<,'> center - center selected text
+:'<,'> center 40 - center selected text at 40 columnsy
+:'<,'> left - align to left
+
+
+# 7 Vim Settings, Preferences and Customizations
+
+:version - info about vim
+
+set ruler = :set ruler - set ruler in .vimrc file
+:set - display all set values (ones that have different value then default)
+:set ruler? - display value of the ruler
+:set ruler! - set oposite value of the ruler
+:set noruler - disable ruler
+:set ruler& - set default value of the ruler
+:h option-list - display all options
+:options - same as above
+
+set history=1000
+
+Special characters for mapping
+
+<BS> - backspace
+<CR> <Enter> <Return> - Enter
+<Esc>  - Esc
+<Up> <Down> <Left> <Right>' - arrows
+<Insert>
+Del - del should be inside <> as well, bo md have problems with it
+<End>
+<PageUp><PageDown>
+<Tab>
+<bar> - ''
+<C-X> - Ctrl - X
+<F1>-<F12> - function keys
+map <F2> iWieslaw <ESC>
+let mapleader = "SYMBOL" - change leader char
+:map - see all mappings
+:vmap - mapping for visual mode
+:nmap - mapping for normal mode
+:vnoremap
+:nnoremap - disables remapping
+:mkvimrc [OPTIONAL_NAME]- creates vimrc with all sets from current session
+" vim: set ft=vim : - set this file as file type vim :h modeline - for more info
+
+# 8 Vim Buffers and Windows
+
+## 8.1 Buffers
+
+:ba
+:ball - open all buffers
+:buffer 2 - open buffer nr 2 
+:b2 - open buffer nr 2
+:b <NAME> - open buffer <NAME>
+:b ctrl+b - dispaly all buffers
+:bn - move to the next buffer
+:bp - move to the previous buffer
+:bf - move to first buffer
+:bl - move to the last bufferi
+crtl+shift+6 - move to last buffer 
+:e <file-name> - open file
+
+:hidden - does not need to force switch when ther anr no saved changes
+:wall - save all buffers
+:qall! - quit all buffers
+:badd <name> - open a <name>file but do not switch to it
+:bd [number]/[file]- removes current or number of file buffer
+:1,3bd - removes 1 to 3 buffers
+:bufdo set ruler - execute command in each buffer
+:bufdo %s/#/@/g | w - pipesymbol allows to execute write on each buffer
+:windo - execute command in every opened window
+:E - explorer
+
+In buffers menu:
+
+# - lastly seleted buffer
+%a - active buffer
++ - buffer has been modified
+h - hidden buffer
+
+## 8.2 Windows
+
+Crtl+w - - decrease hight
+Crtl+w + - increase hight
+Crtl+w > - resize right (vertical)
+Crtl+w < - resize left (vertical)
+Crtl+w _ - maximize hight 
+Crtl+w | - maximize width 
+Crtl+w = - make all windows equal (in size) 
+Crtl - - decrease font 
+Crtl + - increase font 
+
+Ctrl+w s - split window horizontal
+Ctrl+w v - split window vertical
+Ctrl+w q - close window 
+Ctrl+w o - leave only active window open
+Ctrl+w w - jump to the next window 
+Ctrl+w r - rotate windows 
+Ctrl+w R - rotate windows oposite direction 
+Ctrl+w h,j,k,l - navigate through windows using h j k l
+Ctrl+w H,J,K,L - move windows around 
+
+:vsp - vertical split file 
+:vsp [filename] - vertical split with filename 
+:sp - horizontal split file 
+:sp [filename] - horizontal split file with filename
+
+Tips:
+
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+map <leader>h <C-w>h
+map <leader>j <C-w>j
+map <leader>k <C-w>k
+map <leader>l <C-w>l
+
+Be aware of some potenial problem using CTRL CTRL commands. Results may wary :)
+
+# 9 Vim Plugins
+
+{packpath}/pack/{package-name}
+{packpath}/pack/{package-name}/start/{plugin-name}
+{packpath}/pack/{package-name}/opt/{plugin-name}
+
+package-name - can be anytgin, plugin-name is most important
+you can seperate plugins per package for example: all plugins for git should be inside package-name git-plugins 
+
+start - plugins in start directory will start with vim
+opt - those plugins are available for vim,  but not loaded at startup
+:packadd {plugin-directory-name}
+:pa {plugin-directory-name}
+
+:set packpath - display search paths of vim packages (use .vim)
+
+# 10 My other
+
+vim . - open current directory in vim
+ZZ - save file and exit
+
+# 11 Neovim
+
+NeoChad
+a - create new file
+space t h - change theme
+space f f - find files
+space f b - find in bufers (opened files)
+space c h - cheatsheet 
+space - press space and wait a while and it will give a tip
+space x - close buffers
+space h - open terminal horizontal
+space v - open terminal vertical
+crtl +n - files navigator
+
+Customizations
+
+~/.config/nvim/lua/core/
+* chadrc.lua - overwrite default config of neochad
+* init.lua - overwrite neovim options and commands
