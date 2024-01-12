@@ -25,7 +25,7 @@ vim.fn.system - execute shell command from within Neovim and capture their outpu
 
 directory lua/ is one of the places where nvim will look for require
 
-
+:messages - display messages
 # Uninstall
 rm -rf ~/.config/nvim
 rm -rf ~/.local/share/nvim
