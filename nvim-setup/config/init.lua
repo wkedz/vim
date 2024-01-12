@@ -112,8 +112,14 @@ vim.opt.rtp:prepend(lazypath)
 
 -- require will force to load init.lua file from given directory, for our example it is lazy (lazy.nvim/lua/lazy/)
 require("lazy").setup({
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme("catppuccin")
+        end
+    }
 })
 
-vim.cmd.colorscheme("catppuccin")
 
