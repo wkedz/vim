@@ -1,1 +1,2 @@
-/home/lumpy/Nauka/github/vim/nvim-setup/config/init.lua
+require("options")
+require("plugins")
